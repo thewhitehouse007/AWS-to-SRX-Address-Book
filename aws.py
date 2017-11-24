@@ -12,9 +12,6 @@ def get_ec2_instances(region):
     for reservation in reservations:    
         for inst in reservation.instances:
             if inst.state=='running':
-            #tags = inst.tags
-            #name = tags.get('Name') or '(unnamed)'
-            #print '{0}: {1}'.format(name, inst.ip_address)
                 print "set security address-book "+address_book, "address",inst.public_dns_name, inst.ip_address+"/32"
 
 
