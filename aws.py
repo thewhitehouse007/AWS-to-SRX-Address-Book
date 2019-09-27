@@ -12,7 +12,8 @@ def get_ec2_instances(region):
     for reservation in reservations:    
         for inst in reservation.instances:
             if inst.state=='running':
-                print "set security address-book "+address_book, "address",inst.public_dns_name, inst.ip_address+"/32"
+                print "set security address-book "+address_book, "address ",inst.public_dns_name, inst.ip_address+"/32"
+                print "set security address-book "+address_book, "address-set "+address_set_name, "address ",inst.public_dns_name
 
 
 
@@ -23,14 +24,17 @@ def main():
     parser.add_argument('access_key', help='Access Key');
     parser.add_argument('secret_key', help='Secret Key');
     parser.add_argument('address_book', help='Junos SRX Address book');
+    parser.add_argument('address_set_name', help='Junos SRX Address Set name');
 
     args = parser.parse_args()
     global access_key
     global secret_key
     global address_book
+    global address_set_name
     access_key = args.access_key
     secret_key = args.secret_key
     address_book = args.address_book
+    address_set_name = args.address_set_name
     
     for region in regions: get_ec2_instances(region)
 
